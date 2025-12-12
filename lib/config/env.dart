@@ -1,0 +1,2 @@
+const String SUPABASE_URL = "https://pqsfrhjngaklrijtjnfh.supabase.co";
+const String SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxc2ZyaGpuZ2FrbHJpanRqbmZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzNzEwMTQsImV4cCI6MjA4MDk0NzAxNH0.UBEbJNW38DDWhOZbGxWwn4MRVVcCPlH2Ygy1pf0tKgg";
