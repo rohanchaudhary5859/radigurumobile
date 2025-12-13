@@ -154,9 +154,6 @@ flutter:
   generate: true
   assets:
     - assets/images/
-    - assets/animations/
-    - assets/fonts/
-    - assets/translations/
     - .env
 
   fonts:

@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>App</string>
+		<string>Radiguru</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -47,5 +47,13 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+		<string>This app needs camera access to take photos and videos for posts</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>This app needs photo library access to select images for posts</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>This app needs microphone access to record videos</string>
+		<key>NSContactsUsageDescription</key>
+		<string>This app needs contacts access to find and invite friends</string>
 	</dict>
 </plist>
