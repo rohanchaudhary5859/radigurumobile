@@ -18,6 +18,17 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+        languageVersion = "2.0"
+    }
+
+    // Fix for sentry_flutter Kotlin version issue
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
+            force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.20")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.20")
+        }
     }
 
     defaultConfig {
