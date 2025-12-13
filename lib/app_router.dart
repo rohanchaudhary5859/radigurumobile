@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_router_args.dart';
 
 // AUTH SCREENS
 import 'features/auth/login_screen.dart';
@@ -12,7 +13,7 @@ import 'features/search/search_screen.dart';
 import 'features/reels/reels_screen.dart';
 import 'features/create/create_post_screen.dart';
 import 'features/notifications/notifications_screen.dart';
-import 'core/widgets/bottom_nav.dart';
+import 'core/widgets/navigation/bottom_nav.dart';
 
 // PROFILE
 import 'features/profile/profile_screen.dart';
@@ -55,12 +56,13 @@ class AppRouter {
       case '/signup':
         return MaterialPageRoute(builder: (_) => const SignupScreen());
       case '/otp':
+        final args = settings.arguments as OtpArgs?;
         return MaterialPageRoute(
-            builder: (_) => OTPScreen(phone: settings.arguments as String));
+            builder: (_) => OtpScreen(args: args));
 
       // MAIN / HOME / NAVIGATION
       case '/home':
-        return MaterialPageRoute(builder: (_) => const BottomNav());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       // SEARCH
       case '/search':
@@ -86,43 +88,52 @@ class AppRouter {
 
       // USER PROFILE (OTHER USERS)
       case '/user-profile':
+        final args = settings.arguments as UserProfileArgs?;
         return MaterialPageRoute(
-            builder: (_) => UserProfileScreen(userId: settings.arguments as String));
+            builder: (_) => UserProfileScreen(args: args));
       case '/user-posts':
+        final args = settings.arguments as UserPostsArgs?;
         return MaterialPageRoute(
-            builder: (_) => UserPostsScreen(userId: settings.arguments as String));
+            builder: (_) => UserPostsScreen(args: args));
 
       // POST DETAIL
       case '/post-detail':
+        final args = settings.arguments as PostDetailArgs?;
         return MaterialPageRoute(
-            builder: (_) => PostDetailScreen(postId: settings.arguments as String));
+            builder: (_) => PostDetailScreen(args: args));
 
       // COMMENTS
       case '/comments':
+        final args = settings.arguments as CommentsArgs?;
         return MaterialPageRoute(
-            builder: (_) => CommentsScreen(postId: settings.arguments as String));
+            builder: (_) => CommentsScreen(args: args));
 
       // STORY
       case '/story-upload':
         return MaterialPageRoute(builder: (_) => const StoryUploadScreen());
       case '/story-viewer':
+        final args = settings.arguments as StoryViewerArgs?;
         return MaterialPageRoute(
-            builder: (_) => StoryViewer(stories: settings.arguments as List));
+            builder: (_) => StoryViewer(args: args));
 
       // FOLLOW
       case '/followers':
+        final args = settings.arguments as FollowersArgs?;
         return MaterialPageRoute(
-            builder: (_) => FollowersScreen(userId: settings.arguments as String));
+            builder: (_) => FollowersScreen(args: args));
       case '/following':
+        final args = settings.arguments as FollowingArgs?;
         return MaterialPageRoute(
-            builder: (_) => FollowingScreen(userId: settings.arguments as String));
+            builder: (_) => FollowingScreen(args: args));
 
       // MESSAGES (INBOX + CHAT)
       case '/messages':
         return MaterialPageRoute(builder: (_) => const MessagesListScreen());
+      // CHAT
       case '/chat':
+        final args = settings.arguments as ChatArgs?;
         return MaterialPageRoute(
-            builder: (_) => ChatScreen(chatId: settings.arguments as String));
+            builder: (_) => ChatScreen(args: args));
 
       // SETTINGS
       case '/settings':

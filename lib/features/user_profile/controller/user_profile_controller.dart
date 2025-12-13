@@ -51,7 +51,7 @@ class UserProfileController extends StateNotifier<UserProfileState> {
     final profile = await _client
         .from('profiles')
         .select()
-        .eq('id', userId)
+        .filter('id', 'eq', userId)
         .single();
 
     state = state.copyWith(loading: false, profile: profile);
@@ -73,7 +73,7 @@ class UserProfileController extends StateNotifier<UserProfileState> {
     final res = await _client
         .from('posts')
         .select('id, media_urls, caption, author_id')
-        .eq('author_id', userId)
+        .filter('author_id', 'eq', userId)
         .order('created_at', ascending: false)
         .range(offset, offset + limit - 1);
 

@@ -40,7 +40,7 @@ class _StoryUploadScreenState extends ConsumerState<StoryUploadScreen> {
                   onPressed: () async {
                     if (_media != null) {
                       await ref.read(storyControllerProvider.notifier).uploadStory(_media!);
-                      Navigator.pop(context, true);
+                      if (mounted) Navigator.pop(context, true);
                     }
                   },
                   child: const Text("Upload Story"),

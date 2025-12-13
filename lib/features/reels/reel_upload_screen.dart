@@ -26,8 +26,8 @@ class _ReelUploadScreenState extends State<ReelUploadScreen> {
 
     setState(() => loading = true);
 
-    final uid = _client.auth.currentUser!.id;
-    final bucket = 'reels';
+    final uid_ = _client.auth.currentUser!.id;
+    const String bucket = 'reels';
     final path = 'reel_$uid_${DateTime.now().millisecondsSinceEpoch}.mp4';
 
     await _client.storage.from(bucket).upload(path, _video!);
@@ -35,14 +35,14 @@ class _ReelUploadScreenState extends State<ReelUploadScreen> {
     final url = _client.storage.from(bucket).getPublicUrl(path);
 
     await _client.from('reels').insert({
-      'author_id': uid,
+      'author_id': uid_,
       'video_url': url,
       'caption': captionCtrl.text.trim(),
     });
 
     setState(() => loading = false);
 
-    Navigator.pop(context, true);
+    if (mounted) Navigator.pop(context, true);
   }
 
   @override

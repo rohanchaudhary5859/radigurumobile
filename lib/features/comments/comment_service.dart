@@ -16,7 +16,7 @@ class CommentService {
           likes,
           profiles(id, username, avatar_url)
         ''')
-        .eq('post_id', postId)
+        .filter('post_id', 'eq', postId)
         .order('created_at', ascending: true);
 
     return List<Map<String, dynamic>>.from(res);
@@ -41,6 +41,6 @@ class CommentService {
   }
 
   Future<void> deleteComment(String id) async {
-    await _client.from('comments').delete().eq('id', id);
+    await _client.from('comments').delete().filter('id', 'eq', id);
   }
 }

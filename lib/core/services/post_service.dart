@@ -32,13 +32,11 @@ class PostService {
       await _client.storage.from(bucket).remove([path]);
     } catch (_) {}
 
-    final uploaded = await _client.storage.from(bucket).uploadBinary(
+    await _client.storage.from(bucket).uploadBinary(
           path,
           await file.readAsBytes(),
           fileOptions: FileOptions(contentType: contentType),
         );
-
-    if (uploaded == null) throw Exception('Upload failed');
 
     return _client.storage.from(bucket).getPublicUrl(path);
   }
@@ -65,8 +63,8 @@ class PostService {
     final existing = await _client
         .from('post_likes')
         .select()
-        .eq('post_id', postId)
-        .eq('user_id', userId)
+        .filter('post_id', 'eq', postId)
+        .filter('user_id', 'eq', userId)
         .maybeSingle();
 
     if (existing == null) {
@@ -79,8 +77,8 @@ class PostService {
       await _client
           .from('post_likes')
           .delete()
-          .eq('post_id', postId)
-          .eq('user_id', userId);
+          .filter('post_id', 'eq', postId)
+          .filter('user_id', 'eq', userId);
       return false;
     }
   }
@@ -89,10 +87,10 @@ class PostService {
   Future<int> getLikesCount(String postId) async {
     final res = await _client
         .from('post_likes')
-        .select('id', const FetchOptions(count: CountOption.exact))
-        .eq('post_id', postId);
+        .select('id')
+        .filter('post_id', 'eq', postId);
 
-    return res.count ?? 0;
+    return res.length;
   }
 
   /// Fetch comments of a post
@@ -104,7 +102,7 @@ class PostService {
         .from('comments')
         .select(
             'id, content, author_id, created_at, profiles(username, avatar_url)')
-        .eq('post_id', postId)
+        .filter('post_id', 'eq', postId)
         .order('created_at', ascending: true)
         .limit(limit);
 
@@ -125,8 +123,8 @@ class PostService {
     final existing = await _client
         .from('post_saves')
         .select()
-        .eq('post_id', postId)
-        .eq('user_id', userId)
+        .filter('post_id', 'eq', postId)
+        .filter('user_id', 'eq', userId)
         .maybeSingle();
 
     if (existing == null) {
@@ -139,8 +137,8 @@ class PostService {
       await _client
           .from('post_saves')
           .delete()
-          .eq('post_id', postId)
-          .eq('user_id', userId);
+          .filter('post_id', 'eq', postId)
+          .filter('user_id', 'eq', userId);
       return false;
     }
   }

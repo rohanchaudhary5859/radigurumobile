@@ -6,7 +6,7 @@ class StoryService {
   final SupabaseClient _client = Supabase.instance.client;
 
   Future<String> uploadStoryMedia(File file, String userId) async {
-    final bucket = 'stories';
+    const String bucket = 'stories';
     final ext = _ext(file.path);
     final path = 'stories/$userId/${DateTime.now().millisecondsSinceEpoch}$ext';
     final contentType = lookupMimeType(file.path) ?? 'application/octet-stream';

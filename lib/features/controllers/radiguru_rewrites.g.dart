@@ -6,7 +6,7 @@ part of 'radiguru_rewrites.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$followControllerHash() => r'86abcb7452638ddae2db39ea7562c8f7426fffb4';
+String _$followControllerHash() => r'8b5c189185fcd55745d15ef2fcff7ddfbde37f12';
 
 /// See also [FollowController].
 @ProviderFor(FollowController)
@@ -23,7 +23,7 @@ final followControllerProvider =
 
 typedef _$FollowController = AutoDisposeNotifier<FollowState>;
 String _$userProfileControllerHash() =>
-    r'8f8d45ef137da5f5f3466665fcdac5b89b4ccdcf';
+    r'0be095e9473b13cdb38801283f9d3f7b3aba07a9';
 
 /// See also [UserProfileController].
 @ProviderFor(UserProfileController)
@@ -43,7 +43,7 @@ final userProfileControllerProvider =
 
 typedef _$UserProfileController = AutoDisposeNotifier<UserProfileState>;
 String _$postDetailControllerHash() =>
-    r'156de5a857f55b7b762efc3cc59a4b6f574c836c';
+    r'fff10a7a4ce81bab76b1b27a55aef005fafcea9f';
 
 /// See also [PostDetailController].
 @ProviderFor(PostDetailController)
@@ -59,7 +59,7 @@ final postDetailControllerProvider =
     );
 
 typedef _$PostDetailController = AutoDisposeNotifier<PostDetailState>;
-String _$commentControllerHash() => r'fca2881cbdaed08d1a2ae4a4471605014d0f15ae';
+String _$commentControllerHash() => r'8d6224d248fcc20dd9c74ee9a93d79e9c0fda8b2';
 
 /// See also [CommentController].
 @ProviderFor(CommentController)
@@ -75,7 +75,7 @@ final commentControllerProvider =
     );
 
 typedef _$CommentController = AutoDisposeNotifier<CommentState>;
-String _$messageControllerHash() => r'5869b4a33f1296db8530ab1aea0e2a8e70c0fd1c';
+String _$messageControllerHash() => r'2f7849642a1f6da0d8dfcf073f7ee8715314565c';
 
 /// See also [MessageController].
 @ProviderFor(MessageController)
@@ -92,7 +92,7 @@ final messageControllerProvider =
 
 typedef _$MessageController = AutoDisposeNotifier<MessageState>;
 String _$settingsControllerHash() =>
-    r'5fe7bc2fe8e3861f7f4fd08e90dc6fa034553e74';
+    r'eccbb1fdbafd7c7aefd212eac79b2083de34cc46';
 
 /// See also [SettingsController].
 @ProviderFor(SettingsController)

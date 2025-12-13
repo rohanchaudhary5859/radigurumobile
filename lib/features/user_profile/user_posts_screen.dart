@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'controller/user_profile_controller.dart';
 import 'widgets/user_post_tile.dart';
+import '../../app_router_args.dart';
 
 class UserPostsScreen extends ConsumerStatefulWidget {
-  final String userId;
+  final UserPostsArgs? args;
 
-  const UserPostsScreen({super.key, required this.userId});
+  const UserPostsScreen({super.key, this.args});
 
   @override
   ConsumerState<UserPostsScreen> createState() => _UserPostsScreenState();
@@ -18,14 +19,14 @@ class _UserPostsScreenState extends ConsumerState<UserPostsScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(userProfileControllerProvider.notifier).loadPosts(widget.userId, reset: true);
+    ref.read(userProfileControllerProvider.notifier).loadPosts(widget.args?.userId ?? '', reset: true);
 
     _scroll.addListener(() {
       final state = ref.read(userProfileControllerProvider);
       if (_scroll.position.pixels >= _scroll.position.maxScrollExtent - 200 &&
           !state.loadingPosts &&
           state.hasMorePosts) {
-        ref.read(userProfileControllerProvider.notifier).loadPosts(widget.userId);
+        ref.read(userProfileControllerProvider.notifier).loadPosts(widget.args?.userId ?? '');
       }
     });
   }

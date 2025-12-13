@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers/auth_provider.dart';
-import '../../home/home_screen.dart';
+import '../../../app_router_args.dart';
+import '../../core/widgets/navigation/main_navigation.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
-  final String phone;
-  const OtpScreen({super.key, required this.phone});
+  final OtpArgs? args;
+  const OtpScreen({super.key, this.args});
 
   @override
   ConsumerState<OtpScreen> createState() => _OtpScreenState();
@@ -30,7 +31,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Text("OTP sent to ${widget.phone}"),
+            Text("OTP sent to ${widget.args?.phone ?? 'unknown'}"),
             TextField(
               controller: code,
               decoration: const InputDecoration(labelText: "Enter OTP"),
@@ -44,16 +45,16 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     onPressed: () async {
                       final error = await ref
                           .read(authProvider.notifier)
-                          .verifyOTP(widget.phone, code.text.trim());
+                          .verifyOTP(widget.args?.phone ?? '', code.text.trim());
 
-                      if (error != null) {
+                      if (error != null && mounted) {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(error)));
-                      } else {
+                      } else if (mounted) {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const HomeScreen()),
+                              builder: (_) => const MainNavigation()),
                         );
                       }
                     },

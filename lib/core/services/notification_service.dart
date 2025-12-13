@@ -15,13 +15,13 @@ class NotificationService {
           extra,
           profiles!actor_id(username, avatar_url)
         ''')
-        .eq('receiver_id', userId)
+        .filter('receiver_id', 'eq', userId)
         .order('created_at', ascending: false);
 
     return (res as List).map((e) => Map<String, dynamic>.from(e)).toList();
   }
 
   Future<void> markRead(String notificationId) async {
-    await _client.from('notifications').update({'read': true}).eq('id', notificationId);
+    await _client.from('notifications').update({'read': true}).filter('id', 'eq', notificationId);
   }
 }

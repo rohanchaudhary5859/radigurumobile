@@ -60,20 +60,20 @@ class PostDetailController extends StateNotifier<PostDetailState> {
           .from('posts')
           .select(
               'id, caption, media_urls, media_type, created_at, author_id, profiles(username, avatar_url)')
-          .eq('id', postId)
+          .filter('id', 'eq', postId)
           .maybeSingle();
 
-      final post = postRes as Map<String, dynamic>?;
+      final post = postRes;
 
       // -----------------------------
       // 2. Get Likes Count
       // -----------------------------
       final likesRes = await _client
           .from('post_likes')
-          .select('id', const FetchOptions(count: CountOption.exact))
-          .eq('post_id', postId);
+          .select('id')
+          .filter('post_id', 'eq', postId);
 
-      final likesCount = likesRes.count ?? 0;
+      final likesCount = likesRes.length;
 
       // -----------------------------
       // 3. Check if I Liked
@@ -83,8 +83,8 @@ class PostDetailController extends StateNotifier<PostDetailState> {
         final likeCheck = await _client
             .from('post_likes')
             .select()
-            .eq('post_id', postId)
-            .eq('user_id', userId)
+            .filter('post_id', 'eq', postId)
+            .filter('user_id', 'eq', userId!)
             .maybeSingle();
 
         liked = likeCheck != null;
@@ -98,8 +98,8 @@ class PostDetailController extends StateNotifier<PostDetailState> {
         final saveCheck = await _client
             .from('post_saves')
             .select()
-            .eq('post_id', postId)
-            .eq('user_id', userId)
+            .filter('post_id', 'eq', postId)
+            .filter('user_id', 'eq', userId!)
             .maybeSingle();
 
         saved = saveCheck != null;
@@ -112,7 +112,7 @@ class PostDetailController extends StateNotifier<PostDetailState> {
           .from('comments')
           .select(
               'id, content, created_at, author_id, profiles(id, username, avatar_url)')
-          .eq('post_id', postId)
+          .filter('post_id', 'eq', postId)
           .order('created_at', ascending: true);
 
       final comments = (commentsRes as List<dynamic>? ?? [])
@@ -145,20 +145,20 @@ class PostDetailController extends StateNotifier<PostDetailState> {
     final exists = await _client
         .from('post_likes')
         .select()
-        .eq('post_id', postId)
-        .eq('user_id', userId)
+        .filter('post_id', 'eq', postId)
+        .filter('user_id', 'eq', userId!)
         .maybeSingle();
 
     if (exists != null) {
       await _client
           .from('post_likes')
           .delete()
-          .eq('post_id', postId)
-          .eq('user_id', userId);
+          .filter('post_id', 'eq', postId)
+          .filter('user_id', 'eq', userId!);
     } else {
       await _client
           .from('post_likes')
-          .insert({'post_id': postId, 'user_id': userId});
+          .insert({'post_id': postId, 'user_id': userId!});
     }
 
     await loadPost(postId);
@@ -173,20 +173,20 @@ class PostDetailController extends StateNotifier<PostDetailState> {
     final exists = await _client
         .from('post_saves')
         .select()
-        .eq('post_id', postId)
-        .eq('user_id', userId)
+        .filter('post_id', 'eq', postId)
+        .filter('user_id', 'eq', userId!)
         .maybeSingle();
 
     if (exists != null) {
       await _client
           .from('post_saves')
           .delete()
-          .eq('post_id', postId)
-          .eq('user_id', userId);
+          .filter('post_id', 'eq', postId)
+          .filter('user_id', 'eq', userId!);
     } else {
       await _client
           .from('post_saves')
-          .insert({'post_id': postId, 'user_id': userId});
+          .insert({'post_id': postId, 'user_id': userId!});
     }
 
     await loadPost(postId);
@@ -200,7 +200,7 @@ class PostDetailController extends StateNotifier<PostDetailState> {
 
     await _client.from('comments').insert({
       'post_id': postId,
-      'author_id': userId,
+      'author_id': userId!,
       'content': content,
     });
 

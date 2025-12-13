@@ -57,7 +57,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       });
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 
@@ -66,33 +66,226 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final state = ref.watch(profileControllerProvider);
     final avatarUrl = state.profile?['avatar_url'] as String?;
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: _save,
+            child: const Text(
+              'Done',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: state.loading
           ? const Center(child: CircularProgressIndicator())
-          : ListView(
+          : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Avatar(url: _pickedImage == null ? avatarUrl : _pickedImage!.path, size: 96, onTap: _pickAvatar),
-                      TextButton(onPressed: _pickAvatar, child: const Text('Change Avatar')),
-                    ],
+              child: Column(
+                children: [
+                  // Avatar section
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Avatar(
+                              urlOrPath: _pickedImage == null ? avatarUrl : _pickedImage!.path,
+                              size: 96,
+                              onTap: _pickAvatar,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.white, width: 2),
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        TextButton(
+                          onPressed: _pickAvatar,
+                          child: const Text(
+                            'Change Photo',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                TextField(controller: usernameCtrl, decoration: const InputDecoration(labelText: 'Username')),
-                TextField(controller: fullNameCtrl, decoration: const InputDecoration(labelText: 'Full name')),
-                TextField(controller: specializationCtrl, decoration: const InputDecoration(labelText: 'Specialization')),
-                TextField(controller: hospitalCtrl, decoration: const InputDecoration(labelText: 'Hospital / Clinic')),
-                TextField(controller: bioCtrl, decoration: const InputDecoration(labelText: 'Bio'), maxLines: 3),
-                SwitchListTile(
-                    title: const Text('I am a doctor'),
-                    value: isDoctor,
-                    onChanged: (v) => setState(() => isDoctor = v)),
-                const SizedBox(height: 20),
-                ElevatedButton(onPressed: _save, child: const Text('Save')),
-              ],
+
+                  const SizedBox(height: 20),
+
+                  // Profile information
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Profile Information',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: usernameCtrl,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: fullNameCtrl,
+                          decoration: InputDecoration(
+                            labelText: 'Full name',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: specializationCtrl,
+                          decoration: InputDecoration(
+                            labelText: 'Specialization',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: hospitalCtrl,
+                          decoration: InputDecoration(
+                            labelText: 'Hospital / Clinic',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: bioCtrl,
+                          decoration: InputDecoration(
+                            labelText: 'Bio',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                          maxLines: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Role selection
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'I am a doctor',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const Spacer(),
+                        Switch(
+                          value: isDoctor,
+                          onChanged: (v) => setState(() => isDoctor = v),
+                          activeTrackColor: Colors.blue.shade100,
+                          activeThumbColor: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
     );
   }

@@ -12,7 +12,7 @@ class MessageService {
           conversation_members!inner(user_id, profiles(username, avatar_url)),
           messages (id, content, created_at, sender_id)
         ''')
-        .eq('conversation_members.user_id', userId)
+        .filter('conversation_members.user_id', 'eq', userId)
         .order('messages.created_at', ascending: false);
 
     return List<Map<String, dynamic>>.from(data);
@@ -50,7 +50,7 @@ class MessageService {
     var query = _client
         .from('messages')
         .select('id, content, created_at, sender_id, metadata')
-        .eq('conversation_id', conversationId)
+        .filter('conversation_id', 'eq', conversationId)
         .order('created_at', ascending: ascending);
 
     // Supabase v2 pagination fix
@@ -67,5 +67,18 @@ class MessageService {
     final data = await query;
 
     return List<Map<String, dynamic>>.from(data);
+  }
+
+  // Send a message
+  Future<void> sendMessage({
+    required String conversationId,
+    required String senderId,
+    required String content,
+  }) async {
+    await _client.from('messages').insert({
+      'conversation_id': conversationId,
+      'sender_id': senderId,
+      'content': content,
+    });
   }
 }

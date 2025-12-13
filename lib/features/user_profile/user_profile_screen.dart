@@ -12,11 +12,12 @@ import '../follow/follow_controller.dart';
 import 'controller/user_profile_controller.dart';
 
 import 'user_posts_screen.dart';
+import '../../app_router_args.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
-  final String userId;
+  final UserProfileArgs? args;
 
-  const UserProfileScreen({super.key, required this.userId});
+  const UserProfileScreen({super.key, this.args});
 
   @override
   ConsumerState<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -27,7 +28,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void initState() {
     super.initState();
     // Load user profile
-    ref.read(userProfileControllerProvider.notifier).loadProfile(widget.userId);
+    ref.read(userProfileControllerProvider.notifier).loadProfile(widget.args?.userId ?? '');
   }
 
   @override
@@ -108,7 +109,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => FollowersScreen(userId: profile['id']),
+                      builder: (_) => FollowersScreen(args: FollowersArgs(userId: profile['id'])),
                     ),
                   );
                 },
@@ -137,7 +138,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => FollowingScreen(userId: profile['id']),
+                      builder: (_) => FollowingScreen(args: FollowingArgs(userId: profile['id'])),
                     ),
                   );
                 },
@@ -182,7 +183,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => UserPostsScreen(userId: profile['id']),
+                      builder: (_) => UserPostsScreen(args: UserPostsArgs(userId: profile['id'])),
                     ),
                   );
                 },

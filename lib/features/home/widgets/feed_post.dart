@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:share_plus/share_plus.dart';
+import '../../../app_router_args.dart';
 import '../../../core/widgets/avatar.dart';
 import '../../comments/comments_screen.dart';
 import '../../post_detail/post_detail_screen.dart';
@@ -8,7 +9,17 @@ import '../controller/feed_controller.dart';
 
 class FeedPost extends ConsumerWidget {
   final Map<String, dynamic> post;
-  const FeedPost({super.key, required this.post});
+  final VoidCallback? onLike;
+  final VoidCallback? onSave;
+  final VoidCallback? onShare;
+  
+  const FeedPost({
+    super.key, 
+    required this.post,
+    this.onLike,
+    this.onSave,
+    this.onShare,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +54,7 @@ class FeedPost extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PostDetailScreen(postId: postId),
+                    builder: (_) => PostDetailScreen(args: PostDetailArgs(postId: postId)),
                   ),
                 );
               },
@@ -64,45 +75,58 @@ class FeedPost extends ConsumerWidget {
           ),
 
           // ACTION BUTTONS
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.favorite_border),
-                onPressed: () async {
-                  if (postId != null) {
-                    await ref
-                        .read(feedControllerProvider.notifier)
-                        .toggleLike(postId);
-                  }
-                },
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.favorite_border),
+                  onPressed: onLike ?? () async {
+                    if (postId != null) {
+                      await ref
+                          .read(feedControllerProvider.notifier)
+                          .toggleLike(postId);
+                    }
+                  },
+                ),
 
-              IconButton(
-                icon: const Icon(Icons.comment_outlined),
-                onPressed: () {
-                  if (postId == null) return;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CommentsScreen(postId: postId),
-                    ),
-                  );
-                },
-              ),
+                IconButton(
+                  icon: const Icon(Icons.comment_outlined),
+                  onPressed: () {
+                    if (postId == null) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CommentsScreen(args: CommentsArgs(postId: postId)),
+                      ),
+                    );
+                  },
+                ),
 
-              const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.share_outlined),
+                  onPressed: onShare ?? () {
+                    final caption = post['caption'] ?? '';
+                    final authorName = author['username'] ?? 'Unknown';
+                    final shareText = '$caption\n\n- by $authorName on Radiguru';
+                    Share.share(shareText);
+                  },
+                ),
 
-              IconButton(
-                icon: const Icon(Icons.bookmark_border),
-                onPressed: () async {
-                  if (postId != null) {
-                    await ref
-                        .read(feedControllerProvider.notifier)
-                        .toggleSave(postId);
-                  }
-                },
-              ),
-            ],
+                const Spacer(),
+
+                IconButton(
+                  icon: const Icon(Icons.bookmark_border),
+                  onPressed: onSave ?? () async {
+                    if (postId != null) {
+                      await ref
+                          .read(feedControllerProvider.notifier)
+                          .toggleSave(postId);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),

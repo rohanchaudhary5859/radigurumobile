@@ -1,49 +1,46 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class MessageService {
+class ProfileService {
   final SupabaseClient _client = Supabase.instance.client;
 
-  // Get all conversations for current user
-  Future<List<Map<String, dynamic>>> fetchConversations(String userId) async {
+  Future<Map<String, dynamic>> getProfile(String userId) async {
     final data = await _client
-        .from('conversations')
-        .select('''
-          id,
-          conversation_members!inner(user_id, profiles(username, avatar_url)),
-          messages (id, content, created_at, sender_id)
-        ''')
-        .eq('conversation_members.user_id', userId)
-        .order('messages.created_at', ascending: false);
+        .from('profiles')
+        .select('*')
+        .filter('id', 'eq', userId)
+        .single();
+    return Map<String, dynamic>.from(data);
+  }
 
+  Future<void> upsertProfile(Map<String, dynamic> profile) async {
+    await _client
+        .from('profiles')
+        .upsert(profile);
+  }
+
+  Future<List<Map<String, dynamic>>> getUserPosts(String userId) async {
+    final data = await _client
+        .from('posts')
+        .select('*')
+        .filter('author_id', 'eq', userId)
+        .order('created_at', ascending: false);
     return List<Map<String, dynamic>>.from(data);
   }
 
-  // Create or get conversation
-  Future<String> createConversation(String user1, String user2) async {
-    final res = await _client.rpc(
-      'create_or_get_conversation',
-      params: {'user1': user1, 'user2': user2},
-    );
-
-    if (res is List && res.isNotEmpty) {
-      return res.first['conversation_id'];
-    }
-
-    if (res is Map && res.containsKey('conversation_id')) {
-      return res['conversation_id'];
-    }
-
-    throw Exception('Invalid RPC response');
+  Future<List<Map<String, dynamic>>> getUserReels(String userId) async {
+    final data = await _client
+        .from('reels')
+        .select('*')
+        .filter('author_id', 'eq', userId)
+        .order('created_at', ascending: false);
+    return List<Map<String, dynamic>>.from(data);
   }
 
-  // Fetch messages
-  Future<List<Map<String, dynamic>>> fetchMessages(String conversationId) async {
+  Future<List<Map<String, dynamic>>> getSavedPosts(String userId) async {
     final data = await _client
-        .from('messages')
-        .select('id, content, created_at, sender_id')
-        .eq('conversation_id', conversationId)
-        .order('created_at');
-
+        .from('post_saves')
+        .select('posts(*)')
+        .filter('user_id', 'eq', userId);
     return List<Map<String, dynamic>>.from(data);
   }
 }

@@ -10,22 +10,26 @@ final messageControllerProvider =
 class MessageState {
   final bool loading;
   final List<Map<String, dynamic>> messages;
+  final List<Map<String, dynamic>> conversations;
   final String? error;
 
   const MessageState({
     this.loading = false,
     this.messages = const [],
+    this.conversations = const [],
     this.error,
   });
 
   MessageState copyWith({
     bool? loading,
     List<Map<String, dynamic>>? messages,
+    List<Map<String, dynamic>>? conversations,
     String? error,
   }) {
     return MessageState(
       loading: loading ?? this.loading,
       messages: messages ?? this.messages,
+      conversations: conversations ?? this.conversations,
       error: error,
     );
   }
@@ -38,9 +42,38 @@ class MessageController extends StateNotifier<MessageState> {
 
   RealtimeChannel? _channel;
 
-  MessageController(this.ref) : super(const MessageState());
+  MessageController(this.ref) : super(const MessageState()) {
+    _loadConversations();
+  }
 
   String? get userId => _client.auth.currentUser?.id;
+
+  // -------------------
+  // Load conversations
+  // -------------------
+  Future<void> _loadConversations() async {
+    if (userId == null) return;
+    
+    state = state.copyWith(loading: true, error: null);
+
+    try {
+      final response = await _client
+          .from('conversations')
+          .select('*, profiles!conversations_user_id_fkey(*)')
+          .or('user_id.eq.$userId,other_user_id.eq.$userId')
+          .order('updated_at', ascending: false);
+
+      state = state.copyWith(
+        loading: false,
+        conversations: List<Map<String, dynamic>>.from(response),
+      );
+    } catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.toString(),
+      );
+    }
+  }
 
   // -------------------
   // Load all messages (initial)
@@ -88,13 +121,13 @@ class MessageController extends StateNotifier<MessageState> {
     _channel = _client
         .channel('messages:conversation_$conversationId')
         .onPostgresChanges(
-          event: 'INSERT',
+          event: PostgresChangeEvent.insert,
           schema: 'public',
           table: 'messages',
           callback: (payload) {
             try {
               final record =
-                  Map<String, dynamic>.from(payload.record ?? {});
+                  Map<String, dynamic>.from(payload.newRecord ?? {});
 
               // Append new message
               state = state.copyWith(

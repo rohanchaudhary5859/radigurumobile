@@ -12,8 +12,8 @@ class FollowService {
     final exists = await _client
         .from('follows')
         .select()
-        .eq('follower_id', actorId)
-        .eq('followed_id', targetId)
+        .filter('follower_id', 'eq', actorId)
+        .filter('followed_id', 'eq', targetId)
         .maybeSingle();
 
     if (exists != null) {
@@ -21,8 +21,8 @@ class FollowService {
       await _client
           .from('follows')
           .delete()
-          .eq('follower_id', actorId)
-          .eq('followed_id', targetId);
+          .filter('follower_id', 'eq', actorId)
+          .filter('followed_id', 'eq', targetId);
 
       return 'unfollowed';
     }
@@ -31,7 +31,7 @@ class FollowService {
     final profile = await _client
         .from('profiles')
         .select('is_private')
-        .eq('id', targetId)
+        .filter('id', 'eq', targetId)
         .maybeSingle();
 
     final isPrivate = (profile?['is_private'] ?? false) == true;
@@ -77,8 +77,8 @@ class FollowService {
     await _client
         .from('follow_requests')
         .delete()
-        .eq('requester_id', requesterId)
-        .eq('target_id', targetId);
+        .filter('requester_id', 'eq', requesterId)
+        .filter('target_id', 'eq', targetId);
 
     await _client.from('notifications').insert({
       'receiver_id': requesterId,
@@ -97,8 +97,8 @@ class FollowService {
     await _client
         .from('follow_requests')
         .delete()
-        .eq('requester_id', requesterId)
-        .eq('target_id', targetId);
+        .filter('requester_id', 'eq', requesterId)
+        .filter('target_id', 'eq', targetId);
   }
 
   /// Check follow status
@@ -109,8 +109,8 @@ class FollowService {
     final following = await _client
         .from('follows')
         .select()
-        .eq('follower_id', actorId)
-        .eq('followed_id', targetId)
+        .filter('follower_id', 'eq', actorId)
+        .filter('followed_id', 'eq', targetId)
         .maybeSingle();
 
     if (following != null) return 'following';
@@ -118,8 +118,8 @@ class FollowService {
     final requested = await _client
         .from('follow_requests')
         .select()
-        .eq('requester_id', actorId)
-        .eq('target_id', targetId)
+        .filter('requester_id', 'eq', actorId)
+        .filter('target_id', 'eq', targetId)
         .maybeSingle();
 
     if (requested != null) return 'requested';
@@ -135,7 +135,7 @@ class FollowService {
     final data = await _client
         .from('follows')
         .select('follower_id, profiles!follower_id(id, username, avatar_url)')
-        .eq('followed_id', userId)
+        .filter('followed_id', 'eq', userId)
         .limit(limit);
 
     return List<Map<String, dynamic>>.from(data);
@@ -149,7 +149,7 @@ class FollowService {
     final data = await _client
         .from('follows')
         .select('followed_id, profiles!followed_id(id, username, avatar_url)')
-        .eq('follower_id', userId)
+        .filter('follower_id', 'eq', userId)
         .limit(limit);
 
     return List<Map<String, dynamic>>.from(data);
@@ -163,7 +163,7 @@ class FollowService {
     final data = await _client
         .from('follow_requests')
         .select('requester_id, profiles!requester_id(id, username, avatar_url)')
-        .eq('target_id', userId)
+        .filter('target_id', 'eq', userId)
         .limit(limit);
 
     return List<Map<String, dynamic>>.from(data);

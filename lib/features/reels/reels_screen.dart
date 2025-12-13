@@ -19,30 +19,68 @@ class _ReelsScreenState extends ConsumerState<ReelsScreen> {
     final state = ref.watch(reelControllerProvider);
 
     return Scaffold(
-      body: PageView.builder(
-        scrollDirection: Axis.vertical,
-        controller: _pageController,
-        onPageChanged: (i) {
-          if (i >= state.reels.length - 2) {
-            ref.read(reelControllerProvider.notifier).loadReels();
-          }
-        },
-        itemCount: state.reels.length,
-        itemBuilder: (context, index) {
-          final reel = state.reels[index];
-          return Stack(
-            children: [
-              ReelPlayer(videoUrl: reel['video_url']),
-              ReelOverlay(
-                reel: reel,
-                onLike: () {
-                  ref.read(reelControllerProvider.notifier).likeReel(reel['id']);
-                },
-              ),
-            ],
-          );
-        },
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Reels',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
+      body: state.reels.isEmpty && !state.loading
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.videocam_outlined,
+                    size: 64,
+                    color: Colors.white54,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'No reels yet',
+                    style: TextStyle(
+                      color: Colors.white54,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : PageView.builder(
+              scrollDirection: Axis.vertical,
+              controller: _pageController,
+              onPageChanged: (i) {
+                if (i >= state.reels.length - 2) {
+                  ref.read(reelControllerProvider.notifier).loadReels();
+                }
+              },
+              itemCount: state.reels.length + (state.loading ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index == state.reels.length && state.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  );
+                }
+                
+                final reel = state.reels[index];
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ReelPlayer(videoUrl: reel['video_url']),
+                    ReelOverlay(
+                      reel: reel,
+                      onLike: () {
+                        ref.read(reelControllerProvider.notifier).likeReel(reel['id']);
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
     );
   }
 }

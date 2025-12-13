@@ -219,10 +219,14 @@ class FollowController extends _$FollowController {
   Future<void> fetchFollowers(String userId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('follows').select('follower:profiles(*)').eq('followed_id', userId).maybeSingle();
-      // res.data may be null or list depending on schema; use a safe approach
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
-      state = state.copyWith(followers: list, loading: false);
+      final res = await _client.from('follows').select('follower:profiles(*), following:profiles(*)').filter('follower_id', 'eq', userId);
+      final followers = <Map<String, dynamic>>[];
+      final following = <Map<String, dynamic>>[];
+      for (final item in res) {
+        if (item['follower'] != null) followers.add(Map<String, dynamic>.from(item['follower']));
+        if (item['following'] != null) following.add(Map<String, dynamic>.from(item['following']));
+      }
+      state = state.copyWith(followers: followers, following: following, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
     }
@@ -231,8 +235,11 @@ class FollowController extends _$FollowController {
   Future<void> fetchFollowing(String userId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('follows').select('followed:profiles(*)').eq('follower_id', userId).maybeSingle();
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
+      final res = await _client.from('follows').select('followed:profiles(*)').filter('follower_id', 'eq', userId);
+      final list = <Map<String, dynamic>>[];
+      for (final item in res) {
+        if (item['followed'] != null) list.add(Map<String, dynamic>.from(item['followed']));
+      }
       state = state.copyWith(following: list, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
@@ -254,8 +261,11 @@ class FollowController extends _$FollowController {
   Future<void> fetchRequests(String userId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('follow_requests').select('requester:profiles(*)').eq('target_id', userId).maybeSingle();
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
+      final res = await _client.from('follow_requests').select('requester:profiles(*)').filter('target_id', 'eq', userId);
+      final list = <Map<String, dynamic>>[];
+      for (final item in res) {
+        if (item['requester'] != null) list.add(Map<String, dynamic>.from(item['requester']));
+      }
       state = state.copyWith(requests: list, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
@@ -273,8 +283,8 @@ class UserProfileController extends _$UserProfileController {
   Future<void> loadProfile(String userId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('profiles').select().eq('id', userId).maybeSingle();
-      final profile = res.data as Map<String, dynamic>?;
+      final res = await _client.from('profiles').select().filter('id', 'eq', userId).maybeSingle();
+      final profile = res;
       state = state.copyWith(profile: profile, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
@@ -285,10 +295,14 @@ class UserProfileController extends _$UserProfileController {
     if (!state.hasMorePosts || state.loadingPosts) return;
     state = state.copyWith(loadingPosts: true);
     try {
-      var query = _client.from('posts').select().eq('user_id', userId).order('created_at', ascending: false).limit(limit);
-      if (fromCursor != null) query = query.lt('created_at', fromCursor);
-      final res = await query.execute();
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
+      var query = _client.from('posts').select().filter('user_id', 'eq', userId).order('created_at', ascending: false);
+      dynamic data;
+      if (fromCursor != null) {
+        data = await _client.from('posts').select().filter('user_id', 'eq', userId).lt('created_at', fromCursor).order('created_at', ascending: false).limit(limit);
+      } else {
+        data = await query.limit(limit);
+      }
+      final list = List<Map<String, dynamic>>.from(data);
       final all = [...state.posts, ...list];
       state = state.copyWith(posts: all, hasMorePosts: list.length == limit, loadingPosts: false);
     } catch (e) {
@@ -307,15 +321,15 @@ class PostDetailController extends _$PostDetailController {
   Future<void> loadPost(String postId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('posts').select().eq('id', postId).maybeSingle();
-      final post = res.data as Map<String, dynamic>?;
+      final res = await _client.from('posts').select().filter('id', 'eq', postId).maybeSingle();
+      final post = res;
       // fetch likes, comments counts
-      final likesRes = await _client.from('post_likes').select('id', const FetchOptions()).eq('post_id', postId).execute();
+      final likesRes = await _client.from('post_likes').select('id').filter('post_id', 'eq', postId);
       // Note: Postgrest API shape may differ; adapt as needed
-      final likesCount = (likesRes.data is List) ? (likesRes.data as List).length : 0;
+      final likesCount = likesRes.length;
 
-      final commentsRes = await _client.from('post_comments').select().eq('post_id', postId).order('created_at', ascending: true).execute();
-      final comments = (commentsRes.data is List) ? List<Map<String, dynamic>>.from(commentsRes.data) : <Map<String, dynamic>>[];
+      final commentsRes = await _client.from('post_comments').select().filter('post_id', 'eq', postId).order('created_at', ascending: true);
+      final comments = List<Map<String, dynamic>>.from(commentsRes);
 
       state = state.copyWith(post: post, likesCount: likesCount, comments: comments, loading: false);
     } catch (e) {
@@ -329,9 +343,9 @@ class PostDetailController extends _$PostDetailController {
     state = state.copyWith(loading: true);
     try {
       // check if liked
-      final res = await _client.from('post_likes').select().eq('post_id', postId).eq('user_id', userId).maybeSingle();
-      if (res.data != null) {
-        await _client.from('post_likes').delete().eq('post_id', postId).eq('user_id', userId);
+      final res = await _client.from('post_likes').select().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId).maybeSingle();
+      if (res != null) {
+        await _client.from('post_likes').delete().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId);
         state = state.copyWith(likedByMe: false, likesCount: state.likesCount - 1, loading: false);
       } else {
         await _client.from('post_likes').insert({'post_id': postId, 'user_id': userId});
@@ -347,9 +361,9 @@ class PostDetailController extends _$PostDetailController {
     if (userId == null) return;
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('post_saves').select().eq('post_id', postId).eq('user_id', userId).maybeSingle();
-      if (res.data != null) {
-        await _client.from('post_saves').delete().eq('post_id', postId).eq('user_id', userId);
+      final res = await _client.from('post_saves').select().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId).maybeSingle();
+      if (res != null) {
+        await _client.from('post_saves').delete().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId);
         state = state.copyWith(savedByMe: false, loading: false);
       } else {
         await _client.from('post_saves').insert({'post_id': postId, 'user_id': userId});
@@ -371,8 +385,8 @@ class CommentController extends _$CommentController {
   Future<void> loadComments(String postId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('post_comments').select().eq('post_id', postId).order('created_at', ascending: true).execute();
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
+      final res = await _client.from('post_comments').select().filter('post_id', 'eq', postId).order('created_at', ascending: true);
+      final list = List<Map<String, dynamic>>.from(res);
       state = state.copyWith(comments: list, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
@@ -403,8 +417,8 @@ class MessageController extends _$MessageController {
   Future<void> fetchMessages(String conversationId) async {
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('messages').select().eq('conversation_id', conversationId).order('created_at', ascending: true).execute();
-      final list = (res.data is List) ? List<Map<String, dynamic>>.from(res.data) : <Map<String, dynamic>>[];
+      final res = await _client.from('messages').select().filter('conversation_id', 'eq', conversationId).order('created_at', ascending: true);
+      final list = List<Map<String, dynamic>>.from(res);
       state = state.copyWith(messages: list, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
@@ -425,17 +439,18 @@ class MessageController extends _$MessageController {
   void subscribeToConversation(String conversationId) {
     _channel?.unsubscribe();
     _channel = _client.channel('public:messages').onPostgresChanges(
-      payload: RealtimePostgresFilter(event: 'INSERT', schema: 'public', table: 'messages', filter: 'conversation_id=eq.$conversationId'),
-    ).listen((ev) {
-      // handle realtime message
-      // when a message arrives, append it to messages
-      try {
-        final record = ev.record as Map<String, dynamic>?;
-        if (record != null) {
+      event: PostgresChangeEvent.insert,
+      schema: 'public', 
+      table: 'messages',
+      callback: (payload) {
+        // handle realtime message
+        // when a message arrives, append it to messages
+        try {
+          final record = Map<String, dynamic>.from(payload.newRecord ?? {});
           state = state.copyWith(messages: [...state.messages, record]);
-        }
-      } catch (_) {}
-    });
+        } catch (_) {}
+      },
+    ).subscribe();
   }
 
   void disposeChannel() {
@@ -456,8 +471,8 @@ class SettingsController extends _$SettingsController {
     if (userId == null) return;
     state = state.copyWith(loading: true);
     try {
-      final res = await _client.from('profiles').select().eq('id', userId).maybeSingle();
-      state = state.copyWith(profile: res.data as Map<String, dynamic>?, loading: false);
+      final res = await _client.from('profiles').select().filter('id', 'eq', userId).maybeSingle();
+      state = state.copyWith(profile: res, loading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);
     }
@@ -468,7 +483,7 @@ class SettingsController extends _$SettingsController {
     if (userId == null) return;
     state = state.copyWith(loading: true);
     try {
-      await _client.from('profiles').update({field: value}).eq('id', userId);
+      await _client.from('profiles').update({field: value}).filter('id', 'eq', userId);
       await loadMyProfile();
     } catch (e) {
       state = state.copyWith(error: e.toString(), loading: false);

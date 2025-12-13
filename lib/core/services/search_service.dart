@@ -10,21 +10,22 @@ class SearchService {
     int limit = 20,
     int offset = 0,
   }) async {
-    var query = _client
+    dynamic query = _client
         .from('profiles')
         .select(
           'id, username, full_name, specialization, hospital_name, avatar_url, location, created_at',
         )
         .or(
           'username.ilike.%$q%,full_name.ilike.%$q%,specialization.ilike.%$q%',
-        )
-        .order('created_at', ascending: false)
-        .range(offset, offset + limit - 1);
+        );
 
-    // FIX: match() always works after OR
+    // FIX: Apply location filter before ordering and pagination in Supabase v2.x
     if (location != null && location.isNotEmpty) {
       query = query.match({'location': location});
     }
+
+    // Apply ordering and pagination after filtering
+    query = query.order('created_at', ascending: false).range(offset, offset + limit - 1);
 
     final data = await query;
     return List<Map<String, dynamic>>.from(data);
@@ -43,7 +44,7 @@ class SearchService {
           'id, author_id, caption, media_urls, media_type, created_at, profiles(username, avatar_url)',
         )
         .ilike('caption', '%$q%')
-        .eq('media_type', mediaType)
+        .filter('media_type', 'eq', mediaType)
         .order('created_at', ascending: false)
         .range(offset, offset + limit - 1);
 

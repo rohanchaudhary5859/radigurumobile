@@ -1,8 +1,7 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/services/post_service.dart';
-import '../../core/services/storage_service.dart';
 
 final feedControllerProvider =
     StateNotifierProvider<FeedController, FeedState>(
@@ -39,8 +38,6 @@ class FeedState {
 
 class FeedController extends StateNotifier<FeedState> {
   final Ref ref;
-  final PostService _service = PostService();
-  final StorageService _storage = StorageService();
   final SupabaseClient _client = Supabase.instance.client;
 
   int page = 0;
@@ -71,8 +68,7 @@ class FeedController extends StateNotifier<FeedState> {
     try {
       final offset = page * limit;
 
-      final fetched =
-          await _service.fetchFeed(limit: limit, offset: offset);
+      final fetched = await _client.from('posts').select().order('created_at', ascending: false).range(offset, offset + limit - 1);
 
       final merged = reset ? fetched : [...state.posts, ...fetched];
 
@@ -108,20 +104,26 @@ class FeedController extends StateNotifier<FeedState> {
       List<String> mediaUrls = [];
 
       if (mediaFile != null) {
-        final url = await _service.uploadMedia(
-          mediaFile,
-          userId!,
-        );
+        final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+        await _client.storage.from('posts').upload(fileName, mediaFile);
+        final url = _client.storage.from('posts').getPublicUrl(fileName);
         mediaUrls.add(url);
       }
 
       // Create post
-      await _service.createPost(
-        authorId: userId!,
-        caption: caption,
-        mediaUrls: mediaUrls,
-        mediaType: mediaType,
-      );
+      final res = await _client.from('posts').insert([
+        {
+          'author_id': userId,
+          'caption': caption,
+          'media_urls': mediaUrls,
+          'media_type': mediaType,
+        }
+      ]).select();
+
+      if (res.isNotEmpty) {
+        final newPost = res.first as Map<String, dynamic>;
+        state = state.copyWith(posts: [newPost, ...state.posts]);
+      }
 
       await refresh();
     } catch (e) {
@@ -133,9 +135,12 @@ class FeedController extends StateNotifier<FeedState> {
     if (userId == null) return;
 
     try {
-      await _service.toggleLike(postId, userId!);
-
-      // small optimized update instead of refresh
+      final existingLike = await _client.from('post_likes').select().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId!).maybeSingle();
+      if (existingLike != null) {
+        await _client.from('post_likes').delete().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId!);
+      } else {
+        await _client.from('post_likes').insert({'post_id': postId, 'user_id': userId!});
+      }
       await refresh();
     } catch (e) {}
   }
@@ -144,9 +149,12 @@ class FeedController extends StateNotifier<FeedState> {
     if (userId == null) return;
 
     try {
-      await _service.toggleSave(postId, userId!);
-
-      // faster than full reload
+      final existingSave = await _client.from('post_saves').select().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId!).maybeSingle();
+      if (existingSave != null) {
+        await _client.from('post_saves').delete().filter('post_id', 'eq', postId).filter('user_id', 'eq', userId!);
+      } else {
+        await _client.from('post_saves').insert({'post_id': postId, 'user_id': userId!});
+      }
       await refresh();
     } catch (_) {}
   }
@@ -156,13 +164,13 @@ class FeedController extends StateNotifier<FeedState> {
   // -----------------------
   void _subscribeRealtime() {
     _channel = _client.channel('public:posts').onPostgresChanges(
-      event: 'INSERT',
+      event: PostgresChangeEvent.insert,
       schema: 'public',
       table: 'posts',
       callback: (payload) {
         try {
           final newPost =
-              Map<String, dynamic>.from(payload.record ?? {});
+              Map<String, dynamic>.from(payload.newRecord);
 
           // Prepend only unique posts
           if (!state.posts.any((p) => p['id'] == newPost['id'])) {
@@ -170,7 +178,9 @@ class FeedController extends StateNotifier<FeedState> {
               posts: [newPost, ...state.posts],
             );
           }
-        } catch (_) {}
+        } catch (e) {
+          debugPrint('Error in realtime update: $e');
+        }
       },
     ).subscribe();
   }

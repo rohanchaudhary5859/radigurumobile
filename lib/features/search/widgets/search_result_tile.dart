@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class SearchResultTile extends StatelessWidget {
-  final Map<String, dynamic> item;
-  final String type; // 'doctor' or 'post'
+  final Map<String, dynamic> result;
   final VoidCallback? onTap;
 
-  const SearchResultTile({super.key, required this.item, required this.type, this.onTap});
+  const SearchResultTile({super.key, required this.result, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    if (type == 'doctor') {
-      final avatar = item['avatar_url'] ?? '';
-      final name = item['full_name'] ?? item['username'] ?? 'Unknown';
-      final spec = item['specialization'] ?? '';
-      final hospital = item['hospital_name'] ?? '';
+    // Check if this is a doctor/profile result
+    if (result.containsKey('username') || result.containsKey('full_name')) {
+      final avatar = result['avatar_url'] ?? '';
+      final name = result['full_name'] ?? result['username'] ?? 'Unknown';
+      final spec = result['specialization'] ?? '';
+      final hospital = result['hospital_name'] ?? '';
 
       return ListTile(
         onTap: onTap,
@@ -23,15 +23,16 @@ class SearchResultTile extends StatelessWidget {
         trailing: IconButton(icon: const Icon(Icons.person_add), onPressed: () {}),
       );
     } else {
-      final media = (item['media_urls'] as List<dynamic>?) ?? [];
+      // This is a post result
+      final media = (result['media_urls'] as List<dynamic>?) ?? [];
       final thumb = media.isNotEmpty ? media[0] as String : null;
-      final caption = item['caption'] ?? '';
+      final caption = result['caption'] ?? '';
 
       return ListTile(
         onTap: onTap,
         leading: thumb == null ? null : Image.network(thumb, width: 56, height: 56, fit: BoxFit.cover),
         title: Text(caption, maxLines: 1, overflow: TextOverflow.ellipsis),
-        subtitle: Text(item['profiles']?['username'] ?? ''),
+        subtitle: Text(result['profiles']?['username'] ?? ''),
       );
     }
   }

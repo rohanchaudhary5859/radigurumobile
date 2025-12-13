@@ -45,8 +45,6 @@ class FollowButton extends ConsumerWidget {
         ),
         onPressed: () async {
           await controller.toggleFollow(targetId);
-          // Optionally show snackbar
-          final res = ref.read(followControllerProvider.notifier);
         },
         child: child,
       ),

@@ -57,10 +57,10 @@ class SettingsController extends StateNotifier<SettingsState> {
       final res = await _client
           .from('profiles')
           .select()
-          .eq('id', userId)
+          .filter('id', 'eq', userId!)
           .maybeSingle();
 
-      final profile = res as Map<String, dynamic>?;
+      final profile = res;
 
       state = state.copyWith(
         loading: false,
@@ -79,7 +79,7 @@ class SettingsController extends StateNotifier<SettingsState> {
     state = state.copyWith(loading: true);
 
     try {
-      await _client.from('profiles').update({field: value}).eq('id', userId);
+      await _client.from('profiles').update({field: value}).filter('id', 'eq', userId!);
       await loadSettings();
     } catch (e) {
       state = state.copyWith(loading: false);

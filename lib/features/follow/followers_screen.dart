@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../follow/follow_controller.dart';
 import 'widgets/follow_button.dart';
+import '../../app_router_args.dart';
 
 class FollowersScreen extends ConsumerStatefulWidget {
-  final String userId;
-  const FollowersScreen({super.key, required this.userId});
+  final FollowersArgs? args;
+  const FollowersScreen({super.key, this.args});
 
   @override
   ConsumerState<FollowersScreen> createState() => _FollowersScreenState();
@@ -16,7 +17,7 @@ class _FollowersScreenState extends ConsumerState<FollowersScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(followControllerProvider.notifier).loadFollowers(widget.userId);
+      ref.read(followControllerProvider.notifier).loadFollowers(widget.args?.userId ?? '');
     });
   }
 

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../features/home/widgets/feed_post.dart';
-import '../../features/create/create_post_screen.dart';
-import '../../features/home/controller/feed_controller.dart';
-
-// STORIES
-import '../../features/stories/story_controller.dart';
-import '../../features/stories/widgets/story_bar.dart';
+import '../create/create_post_screen.dart';
+import 'controller/feed_controller.dart';
+import 'widgets/feed_post.dart';
+import 'widgets/story_bar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -16,89 +12,127 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+  class _HomeScreenState extends ConsumerState<HomeScreen> {
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(feedControllerProvider.notifier).loadMore(reset: true);
+    });
   }
 
   void _onScroll() {
-    final state = ref.read(feedControllerProvider);
-
-    final reachedBottom = _scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200;
-
-    if (reachedBottom && !state.loading && state.hasMore) {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       ref.read(feedControllerProvider.notifier).loadMore();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final feedState = ref.watch(feedControllerProvider);
+    final state = ref.watch(feedControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radiguru'),
-      ),
-
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await ref.read(feedControllerProvider.notifier).refresh();
-
-          // FIXED: if your story controller uses load(), change accordingly
-          await ref.read(storyControllerProvider.notifier).loadStories();
-        },
-
-        child: ListView(
-          controller: _scrollController,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Row(
           children: [
-            const StoryBar(),
-            const SizedBox(height: 10),
-
-            // FEED POSTS
-            if (feedState.posts.isEmpty && feedState.loading)
-              const Padding(
-                padding: EdgeInsets.only(top: 200),
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount:
-                    feedState.posts.length + (feedState.hasMore ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index >= feedState.posts.length) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(child: CircularProgressIndicator()),
-                    );
-                  }
-
-                  return FeedPost(post: feedState.posts[index]);
-                },
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFE1306C), Color(0xFFFD1D1D)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: const Center(
+                child: Text(
+                  'R',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'Medigram',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.black),
+            onPressed: () {
+              // Navigate to search
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            onPressed: () {
+              // TODO: Navigate to notifications
+            },
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: () => ref.read(feedControllerProvider.notifier).refresh(),
+        child: Column(
+          children: [
+            // Stories bar
+            const StoryBar(),
+            // Feed
+            Expanded(
+              child: state.loading && state.posts.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : state.posts.isEmpty
+                      ? const Center(
+                          child: Text('No posts yet. Create one!'),
+                        )
+                      : ListView.builder(
+                          controller: _scrollController,
+                          itemCount: state.posts.length + (state.hasMore ? 1 : 0),
+                          itemBuilder: (context, index) {
+                            if (index == state.posts.length && state.hasMore) {
+                              return const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            
+                            final post = state.posts[index];
+                            return FeedPost(
+                              post: post,
+                              onLike: () => ref.read(feedControllerProvider.notifier).toggleLike(post['id']),
+                              onSave: () => ref.read(feedControllerProvider.notifier).toggleSave(post['id']),
+                            );
+                          },
+                        ),
+            ),
           ],
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final res = await Navigator.push(
+        onPressed: () {
+          Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const CreatePostScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const CreatePostScreen()),
           );
-
-          if (res == true) {
-            await ref.read(feedControllerProvider.notifier).refresh();
-            await ref.read(storyControllerProvider.notifier).loadStories();
-          }
         },
         child: const Icon(Icons.add_a_photo),
       ),

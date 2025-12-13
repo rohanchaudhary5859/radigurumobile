@@ -18,18 +18,16 @@ class StorageService {
       await _client.storage.from(bucket).remove([path]);
     } catch (_) {}
 
-    final res = await _client.storage.from(bucket).uploadBinary(
+    await _client.storage.from(bucket).uploadBinary(
           path,
           await file.readAsBytes(),
           fileOptions: FileOptions(contentType: contentType),
         );
 
-    if (res != null) {
-      // build public URL
-      final url = _client.storage.from(bucket).getPublicUrl(path);
-      return url;
-    }
-
+    // build public URL
+    final url = _client.storage.from(bucket).getPublicUrl(path);
+    return url;
+  
     throw Exception('Upload failed');
   }
 }

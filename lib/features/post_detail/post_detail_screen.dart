@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../app_router_args.dart';
 import '../comments/comments_screen.dart';
 import 'post_detail_controller.dart';
 import 'widgets/post_actions_row.dart';
@@ -7,8 +8,8 @@ import '../../features/follow/widgets/follow_button.dart';
 import 'package:intl/intl.dart';
 
 class PostDetailScreen extends ConsumerStatefulWidget {
-  final String postId;
-  const PostDetailScreen({super.key, required this.postId});
+  final PostDetailArgs? args;
+  const PostDetailScreen({super.key, this.args});
 
   @override
   ConsumerState<PostDetailScreen> createState() => _PostDetailScreenState();
@@ -20,7 +21,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(postDetailControllerProvider.notifier).loadPost(widget.postId);
+    ref.read(postDetailControllerProvider.notifier).loadPost(widget.args?.postId ?? '');
   }
 
   @override
@@ -58,11 +59,11 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen> {
           PostActionsRow(
             liked: state.likedByMe,
             saved: state.savedByMe,
-            onLike: () => ref.read(postDetailControllerProvider.notifier).toggleLike(widget.postId),
+            onLike: () => ref.read(postDetailControllerProvider.notifier).toggleLike(widget.args?.postId ?? ''),
             onComment: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => CommentsScreen(postId: widget.postId)));
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CommentsScreen(args: CommentsArgs(postId: widget.args?.postId ?? ''))));
             },
-            onSave: () => ref.read(postDetailControllerProvider.notifier).toggleSave(widget.postId),
+            onSave: () => ref.read(postDetailControllerProvider.notifier).toggleSave(widget.args?.postId ?? ''),
             onShare: () {
               // Simple share: copy link or share via system - placeholder
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Share action')));
@@ -112,12 +113,12 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen> {
               title: Text(profile['username'] ?? 'User'),
               subtitle: Text(c['content'] ?? ''),
             );
-          }).toList(),
+          }),
 
           if (state.comments.length > 5)
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => CommentsScreen(postId: widget.postId)));
+                Navigator.push(context, MaterialPageRoute(builder: (_) => CommentsScreen(args: CommentsArgs(postId: widget.args?.postId ?? ''))));
               },
               child: const Text('View all comments'),
             ),
@@ -144,7 +145,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen> {
                 onPressed: () async {
                   final text = _commentCtrl.text.trim();
                   if (text.isEmpty) return;
-                  await ref.read(postDetailControllerProvider.notifier).addComment(widget.postId, text);
+                  await ref.read(postDetailControllerProvider.notifier).addComment(widget.args?.postId ?? '', text);
                   _commentCtrl.clear();
                 },
               )

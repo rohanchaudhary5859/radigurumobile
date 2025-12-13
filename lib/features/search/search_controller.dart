@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/services/search_service.dart';
 
-final searchControllerProvider = StateNotifierProvider<SearchController, SearchState>(
-  (ref) => SearchController(),
+final searchControllerProvider = StateNotifierProvider<AppSearchController, SearchState>(
+  (ref) => AppSearchController(),
 );
 
 class SearchState {
@@ -42,13 +42,13 @@ class SearchState {
   }
 }
 
-class SearchController extends StateNotifier<SearchState> {
+class AppSearchController extends StateNotifier<SearchState> {
   final SearchService _service = SearchService();
   Timer? _debounce;
   int _page = 0;
   final int _limit = 20;
 
-  SearchController() : super(SearchState());
+  AppSearchController() : super(SearchState());
 
   void setTab(String tab) {
     state = state.copyWith(activeTab: tab, results: [], hasMore: true);

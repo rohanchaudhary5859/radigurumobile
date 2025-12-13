@@ -1,12 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../core/services/supabase_service.dart';
 
 class AuthController extends StateNotifier<bool> {
   final Ref ref;
   AuthController(this.ref) : super(false);
 
-  final supabase = SupabaseService.client;
+  final supabase = Supabase.instance.client;
 
   // LOGIN
   Future<String?> login(String email, String password) async {

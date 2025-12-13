@@ -50,7 +50,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
 
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
-      ScaffoldMessenger.of(context)
+      if (mounted) ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
@@ -58,33 +58,188 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Post')),
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: [
-          if (_media != null)
-            Image.file(
-              _media!,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
-
-          TextButton.icon(
-            onPressed: _pick,
-            icon: const Icon(Icons.photo),
-            label: const Text('Pick Photo'),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Create Post',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
-
-          TextField(
-            controller: captionCtrl,
-            decoration: const InputDecoration(labelText: 'Write a caption'),
-          ),
-
-          const SizedBox(height: 20),
-
-          ElevatedButton(
+        ),
+        actions: [
+          TextButton(
             onPressed: _submit,
-            child: const Text('Post'),
+            child: const Text(
+              'Share',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                // Media preview area
+                Container(
+                  height: 300,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: _media != null
+                      ? Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(
+                                _media!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            ),
+                            Positioned(
+                              top: 8,
+                              right: 8,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _media = null;
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.6),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 64,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                'Add media to your post',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Media selection buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: _pick,
+                        icon: const Icon(Icons.photo_library),
+                        label: const Text('Photo'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[200],
+                          foregroundColor: Colors.black,
+                          elevation: 0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          // TODO: Video picker
+                        },
+                        icon: const Icon(Icons.videocam),
+                        label: const Text('Video'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[200],
+                          foregroundColor: Colors.black,
+                          elevation: 0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Caption field
+                TextField(
+                  controller: captionCtrl,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: 'Write a caption...',
+                    border: InputBorder.none,
+                    hintStyle: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 16,
+                    ),
+                  ),
+                  style: const TextStyle(fontSize: 16),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Add location, tag people options
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.location_on_outlined),
+                      onPressed: () {
+                        // TODO: Add location
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.person_add_outlined),
+                      onPressed: () {
+                        // TODO: Tag people
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.emoji_emotions_outlined),
+                      onPressed: () {
+                        // TODO: Add emoji
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

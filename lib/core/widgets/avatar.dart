@@ -33,7 +33,7 @@ class Avatar extends StatelessWidget {
           height: size,
           fit: BoxFit.cover,
           placeholder: (_, __) => CircleAvatar(radius: size / 2),
-          errorWidget: (_, __, ___) => CircleAvatar(radius: size / 2, child: Icon(Icons.person)),
+          errorWidget: (_, __, ___) => const CircleAvatar(radius: 0, child: Icon(Icons.person)),
         ),
       );
     }

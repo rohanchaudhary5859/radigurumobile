@@ -82,12 +82,12 @@ class NotificationController extends StateNotifier<NotificationState> {
     _channel = _client
         .channel('notifications:user_$userId')
         .onPostgresChanges(
-          event: 'INSERT',
+          event: PostgresChangeEvent.insert,
           schema: 'public',
           table: 'notifications',
           callback: (payload) async {
             final record =
-                Map<String, dynamic>.from(payload.record ?? {});
+                Map<String, dynamic>.from(payload.newRecord ?? {});
 
             // Only refresh if notification belongs to current user
             if (record['receiver_id'] == userId) {
