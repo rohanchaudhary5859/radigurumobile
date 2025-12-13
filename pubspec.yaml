@@ -55,7 +55,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   shared_preferences: ^2.2.2
   google_sign_in: ^6.1.6
-  sign_in_with_apple: ^5.0.0
+  sign_in_with_apple: ^7.0.0
   supabase_flutter: ^2.3.4
   flutter_riverpod: ^2.4.9
   flutter_local_notifications: ^17.2.3
@@ -67,7 +67,7 @@ dependencies:
   permission_handler: ^11.1.0
   flutter_dotenv: ^5.1.0
   flutter_facebook_auth: ^5.0.8
-  sentry_flutter: ^7.11.0
+  sentry_flutter: ^8.0.0
   flutter_screenutil: ^5.9.0
   scroll_to_index: ^3.0.1
   pull_to_refresh: ^2.0.0
