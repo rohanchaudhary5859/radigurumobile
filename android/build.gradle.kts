@@ -1,11 +1,11 @@
 buildscript {
-    extra["kotlin_version"] = "2.0.20"
+    extra["kotlin_version"] = "2.1.0"
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.20")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
 
@@ -18,10 +18,10 @@ allprojects {
     // Fix Kotlin version for all subprojects
     configurations.all {
         resolutionStrategy {
-            force("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
-            force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.20")
-            force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20")
-            force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.20")
+            force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
+            force("org.jetbrains.kotlin:kotlin-stdlib-common:2.1.0")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.0")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0")
         }
     }
 }
