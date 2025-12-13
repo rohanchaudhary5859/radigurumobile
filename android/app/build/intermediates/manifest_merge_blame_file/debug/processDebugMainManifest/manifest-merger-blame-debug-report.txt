@@ -1,0 +1,416 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.radiguru.app"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="36" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->C:\Users\rohan\Desktop\radiguru\android\app\src\debug\AndroidManifest.xml:6:5-66
+15-->C:\Users\rohan\Desktop\radiguru\android\app\src\debug\AndroidManifest.xml:6:22-64
+16    <!--
+17     Required to query activities that can process text, see:
+18         https://developer.android.com/training/package-visibility and
+19         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+20
+21         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+22    -->
+23    <queries>
+23-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:39:5-44:15
+24        <intent>
+24-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:40:9-43:18
+25            <action android:name="android.intent.action.PROCESS_TEXT" />
+25-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:41:13-72
+25-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:41:21-70
+26
+27            <data android:mimeType="text/plain" />
+27-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:42:13-50
+27-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:42:19-48
+28        </intent>
+29
+30        <package android:name="com.facebook.katana" />
+30-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:18:9-55
+30-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:18:18-52
+31
+32        <intent>
+32-->[:file_picker] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-12:18
+33            <action android:name="android.intent.action.GET_CONTENT" />
+33-->[:file_picker] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-72
+33-->[:file_picker] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\file_picker-8.3.7\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:21-69
+34
+35            <data android:mimeType="*/*" />
+35-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:42:13-50
+35-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:42:19-48
+36        </intent>
+37    </queries>
+38
+39    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+39-->[:connectivity_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-79
+39-->[:connectivity_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-76
+40    <uses-permission android:name="android.permission.VIBRATE" />
+40-->[:flutter_local_notifications] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-66
+40-->[:flutter_local_notifications] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-63
+41    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+41-->[:flutter_local_notifications] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-77
+41-->[:flutter_local_notifications] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:22-74
+42    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+42-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:16:5-79
+42-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:16:22-76
+43
+44    <permission
+44-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:22:5-24:47
+45        android:name="com.radiguru.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+45-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:23:9-81
+46        android:protectionLevel="signature" />
+46-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:24:9-44
+47
+48    <uses-permission android:name="com.radiguru.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+48-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:26:5-97
+48-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:26:22-94
+49    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+49-->[com.android.installreferrer:installreferrer:1.0] C:\Users\rohan\.gradle\caches\8.13\transforms\31640548a8a2dacb8e383f9d90f34095\transformed\installreferrer-1.0\AndroidManifest.xml:9:5-110
+49-->[com.android.installreferrer:installreferrer:1.0] C:\Users\rohan\.gradle\caches\8.13\transforms\31640548a8a2dacb8e383f9d90f34095\transformed\installreferrer-1.0\AndroidManifest.xml:9:22-107
+50
+51    <application
+52        android:name="android.app.Application"
+53        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+53-->[androidx.core:core:1.17.0] C:\Users\rohan\.gradle\caches\8.13\transforms\98186e998e5a581bae9bd629ba972f66\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
+54        android:debuggable="true"
+55        android:extractNativeLibs="false"
+56        android:icon="@mipmap/ic_launcher"
+57        android:label="app"
+58        android:supportsRtl="true" >
+58-->[com.facebook.android:facebook-login:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\6f0cf7b38939254802bb604d9f96c1bb\transformed\facebook-login-16.0.1\AndroidManifest.xml:16:18-44
+59        <activity
+60            android:name="com.radiguru.app.MainActivity"
+61            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+62            android:exported="true"
+63            android:hardwareAccelerated="true"
+64            android:launchMode="singleTop"
+65            android:taskAffinity=""
+66            android:theme="@style/LaunchTheme"
+67            android:windowSoftInputMode="adjustResize" >
+68
+69            <!--
+70                 Specifies an Android theme to apply to this Activity as soon as
+71                 the Android process has started. This theme is visible to the user
+72                 while the Flutter UI initializes. After that, this theme continues
+73                 to determine the Window background behind the Flutter UI.
+74            -->
+75            <meta-data
+76                android:name="io.flutter.embedding.android.NormalTheme"
+77                android:resource="@style/NormalTheme" />
+78
+79            <intent-filter>
+80                <action android:name="android.intent.action.MAIN" />
+81
+82                <category android:name="android.intent.category.LAUNCHER" />
+83            </intent-filter>
+84        </activity>
+85        <!--
+86             Don't delete the meta-data below.
+87             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+88        -->
+89        <meta-data
+90            android:name="flutterEmbedding"
+91            android:value="2" />
+92        <!--
+93           Declares a provider which allows us to store files to share in
+94           '.../caches/share_plus' and grant the receiving action access
+95        -->
+96        <provider
+96-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:13:9-21:20
+97            android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
+97-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:13-77
+98            android:authorities="com.radiguru.app.flutter.share_provider"
+98-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:13-74
+99            android:exported="false"
+99-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:16:13-37
+100            android:grantUriPermissions="true" >
+100-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:13-47
+101            <meta-data
+101-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:13-20:68
+102                android:name="android.support.FILE_PROVIDER_PATHS"
+102-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:17-67
+103                android:resource="@xml/flutter_share_file_paths" />
+103-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:17-65
+104        </provider>
+105        <!--
+106           This manifest declared broadcast receiver allows us to use an explicit
+107           Intent when creating a PendingItent to be informed of the user's choice
+108        -->
+109        <receiver
+109-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:9-32:20
+110            android:name="dev.fluttercommunity.plus.share.SharePlusPendingIntent"
+110-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:27:13-82
+111            android:exported="false" >
+111-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-37
+112            <intent-filter>
+112-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:13-31:29
+113                <action android:name="EXTRA_CHOSEN_COMPONENT" />
+113-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:17-65
+113-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:25-62
+114            </intent-filter>
+115        </receiver>
+116
+117        <provider
+117-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:9-17:20
+118            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+118-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-82
+119            android:authorities="com.radiguru.app.flutter.image_provider"
+119-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-74
+120            android:exported="false"
+120-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:12:13-37
+121            android:grantUriPermissions="true" >
+121-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:13:13-47
+122            <meta-data
+122-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:13-20:68
+123                android:name="android.support.FILE_PROVIDER_PATHS"
+123-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:17-67
+124                android:resource="@xml/flutter_image_picker_file_paths" />
+124-->[:share_plus] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\share_plus-7.2.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:17-65
+125        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+126        <service
+126-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:9-31:19
+127            android:name="com.google.android.gms.metadata.ModuleDependencies"
+127-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:13-78
+128            android:enabled="false"
+128-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:13-36
+129            android:exported="false" >
+129-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:13-37
+130            <intent-filter>
+130-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:13-26:29
+131                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+131-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:17-94
+131-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:25-91
+132            </intent-filter>
+133
+134            <meta-data
+134-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-30:36
+135                android:name="photopicker_activity:0:required"
+135-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:17-63
+136                android:value="" />
+136-->[:image_picker_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:17-33
+137        </service>
+138
+139        <activity
+139-->[:url_launcher_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-11:74
+140            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+140-->[:url_launcher_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-74
+141            android:exported="false"
+141-->[:url_launcher_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-37
+142            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+142-->[:url_launcher_android] C:\Users\rohan\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.28\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-71
+143        <activity
+143-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:22:9-25:66
+144            android:name="com.facebook.FacebookActivity"
+144-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:23:13-57
+145            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+145-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:24:13-96
+146            android:theme="@style/com_facebook_activity_theme" />
+146-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:25:13-63
+147        <activity android:name="com.facebook.CustomTabMainActivity" />
+147-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:26:9-71
+147-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:26:19-68
+148        <activity
+148-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:27:9-41:20
+149            android:name="com.facebook.CustomTabActivity"
+149-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:28:13-58
+150            android:exported="true" >
+150-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:29:13-36
+151            <intent-filter>
+151-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:31:13-40:29
+152                <action android:name="android.intent.action.VIEW" />
+152-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:32:17-69
+152-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:32:25-66
+153
+154                <category android:name="android.intent.category.DEFAULT" />
+154-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:34:17-76
+154-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:34:27-73
+155                <category android:name="android.intent.category.BROWSABLE" />
+155-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:35:17-78
+155-->[com.facebook.android:facebook-common:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\0562d10dc9d0cd588f4bdf26a7ec48a6\transformed\facebook-common-16.0.1\AndroidManifest.xml:35:27-75
+156
+157                <data
+157-->C:\Users\rohan\Desktop\radiguru\android\app\src\main\AndroidManifest.xml:42:13-50
+158                    android:host="cct.com.radiguru.app"
+159                    android:scheme="fbconnect" />
+160            </intent-filter>
+161        </activity>
+162        <activity
+162-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:23:9-27:75
+163            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+163-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:24:13-93
+164            android:excludeFromRecents="true"
+164-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:25:13-46
+165            android:exported="false"
+165-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:26:13-37
+166            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+166-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:27:13-72
+167        <!--
+168            Service handling Google Sign-In user revocation. For apps that do not integrate with
+169            Google Sign-In, this service will never be started.
+170        -->
+171        <service
+171-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:33:9-37:51
+172            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+172-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:34:13-89
+173            android:exported="true"
+173-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:35:13-36
+174            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+174-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:36:13-107
+175            android:visibleToInstantApps="true" />
+175-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7a19f6e95df61d4fc02dce7c4e11cedf\transformed\play-services-auth-21.0.0\AndroidManifest.xml:37:13-48
+176
+177        <activity
+177-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\64d13aeac4c4e97ab83567de10c52d68\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+178            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+178-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\64d13aeac4c4e97ab83567de10c52d68\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+179            android:exported="false"
+179-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\64d13aeac4c4e97ab83567de10c52d68\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+180            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+180-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\64d13aeac4c4e97ab83567de10c52d68\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+181
+182        <meta-data
+182-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3e81b0220f83567048ef1293765ccd39\transformed\play-services-basement-18.2.0\AndroidManifest.xml:21:9-23:69
+183            android:name="com.google.android.gms.version"
+183-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3e81b0220f83567048ef1293765ccd39\transformed\play-services-basement-18.2.0\AndroidManifest.xml:22:13-58
+184            android:value="@integer/google_play_services_version" />
+184-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3e81b0220f83567048ef1293765ccd39\transformed\play-services-basement-18.2.0\AndroidManifest.xml:23:13-66
+185
+186        <uses-library
+186-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:23:9-25:40
+187            android:name="androidx.window.extensions"
+187-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:24:13-54
+188            android:required="false" />
+188-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:25:13-37
+189        <uses-library
+189-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:26:9-28:40
+190            android:name="androidx.window.sidecar"
+190-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:27:13-51
+191            android:required="false" />
+191-->[androidx.window:window:1.2.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3713732c88bf1d5ebb1bb3877bdad250\transformed\window-1.2.0\AndroidManifest.xml:28:13-37
+192        <!--
+193         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+194         with the application context. This config is merged in with the host app's manifest,
+195         but there can only be one provider with the same authority activated at any given
+196         point; so if the end user has two or more different apps that use Facebook SDK, only the
+197         first one will be able to use the provider. To work around this problem, we use the
+198         following placeholder in the authority to identify each host application as if it was
+199         a completely different provider.
+200        -->
+201        <provider
+201-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:29:9-32:40
+202            android:name="com.facebook.internal.FacebookInitProvider"
+202-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:30:13-70
+203            android:authorities="com.radiguru.app.FacebookInitProvider"
+203-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:31:13-72
+204            android:exported="false" />
+204-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:32:13-37
+205
+206        <receiver
+206-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:34:9-40:20
+207            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+207-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:35:13-86
+208            android:exported="false" >
+208-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:36:13-37
+209            <intent-filter>
+209-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:37:13-39:29
+210                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+210-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:38:17-95
+210-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:38:25-92
+211            </intent-filter>
+212        </receiver>
+213        <receiver
+213-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:41:9-47:20
+214            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+214-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:42:13-118
+215            android:exported="false" >
+215-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:43:13-37
+216            <intent-filter>
+216-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:44:13-46:29
+217                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+217-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:45:17-103
+217-->[com.facebook.android:facebook-core:16.0.1] C:\Users\rohan\.gradle\caches\8.13\transforms\affdb705efa66c16093b437af45f905a\transformed\facebook-core-16.0.1\AndroidManifest.xml:45:25-100
+218            </intent-filter>
+219        </receiver>
+220
+221        <provider
+221-->[io.sentry:sentry-android-core:7.8.0] C:\Users\rohan\.gradle\caches\8.13\transforms\06eb616dcfb4c6d9d95906fb73d2557d\transformed\sentry-android-core-7.8.0\AndroidManifest.xml:16:9-20:39
+222            android:name="io.sentry.android.core.SentryPerformanceProvider"
+222-->[io.sentry:sentry-android-core:7.8.0] C:\Users\rohan\.gradle\caches\8.13\transforms\06eb616dcfb4c6d9d95906fb73d2557d\transformed\sentry-android-core-7.8.0\AndroidManifest.xml:17:13-76
+223            android:authorities="com.radiguru.app.SentryPerformanceProvider"
+223-->[io.sentry:sentry-android-core:7.8.0] C:\Users\rohan\.gradle\caches\8.13\transforms\06eb616dcfb4c6d9d95906fb73d2557d\transformed\sentry-android-core-7.8.0\AndroidManifest.xml:18:13-77
+224            android:exported="false"
+224-->[io.sentry:sentry-android-core:7.8.0] C:\Users\rohan\.gradle\caches\8.13\transforms\06eb616dcfb4c6d9d95906fb73d2557d\transformed\sentry-android-core-7.8.0\AndroidManifest.xml:19:13-37
+225            android:initOrder="200" />
+225-->[io.sentry:sentry-android-core:7.8.0] C:\Users\rohan\.gradle\caches\8.13\transforms\06eb616dcfb4c6d9d95906fb73d2557d\transformed\sentry-android-core-7.8.0\AndroidManifest.xml:20:13-36
+226        <provider
+226-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+227            android:name="androidx.startup.InitializationProvider"
+227-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+228            android:authorities="com.radiguru.app.androidx-startup"
+228-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+229            android:exported="false" >
+229-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+230            <meta-data
+230-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+231                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+231-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+232                android:value="androidx.startup" />
+232-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\rohan\.gradle\caches\8.13\transforms\3f4ed6ed27142a2a1982d356db99be3e\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+233            <meta-data
+233-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+234                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+234-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+235                android:value="androidx.startup" />
+235-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+236        </provider>
+237
+238        <receiver
+238-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+239            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+239-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+240            android:directBootAware="false"
+240-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+241            android:enabled="true"
+241-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+242            android:exported="true"
+242-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+243            android:permission="android.permission.DUMP" >
+243-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+244            <intent-filter>
+244-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+245                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+245-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+245-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+246            </intent-filter>
+247            <intent-filter>
+247-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+248                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+248-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+248-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+249            </intent-filter>
+250            <intent-filter>
+250-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+251                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+251-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+251-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+252            </intent-filter>
+253            <intent-filter>
+253-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+254                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+254-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+254-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\rohan\.gradle\caches\8.13\transforms\7f5daa02decbd892f8cb69bfb4a790e0\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+255            </intent-filter>
+256        </receiver>
+257    </application>
+258
+259</manifest>

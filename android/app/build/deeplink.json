@@ -1,0 +1,1 @@
+{"applicationId":"com.radiguru.app","deeplinkingFlagEnabled":false,"deeplinks":[{"scheme":"fbconnect","host":"cct.com.radiguru.app","path":".*","intentFilterCheck":{"hasAutoVerify":false,"hasActionView":true,"hasDefaultCategory":true,"hasBrowsableCategory":true}}]}
